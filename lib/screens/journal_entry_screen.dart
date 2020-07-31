@@ -42,8 +42,8 @@ class _JournalScreen extends State<JournalScreen> {
   Widget horizontal() {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       Container(
-          constraints:
-              BoxConstraints(maxWidth: 400, maxHeight: 300, minWidth: 400),
+          constraints: BoxConstraints(
+              maxWidth: 400, maxHeight: 300, minWidth: 200, minHeight: 300),
           child: ListView(
               children: journal.myJournal.map((item) {
             return ListTile(
@@ -60,28 +60,28 @@ class _JournalScreen extends State<JournalScreen> {
                 });
           }).toList())),
       Container(
-        constraints: BoxConstraints(maxWidth: 200, maxHeight: 300, minWidth: 200) ,
+          constraints: BoxConstraints(
+              maxWidth: 200, maxHeight: 300, minWidth: 200, minHeight: 300),
           child: ListView(
-        children: <Widget>[
-          Text(
-            currentTap.title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
-          ),
-          Text(currentTap.body, style: TextStyle(fontSize: 20))
-        ],
-      ))
+            children: <Widget>[
+              Text(
+                currentTap.title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
+              ),
+              Text(currentTap.body, style: TextStyle(fontSize: 20))
+            ],
+          ))
     ]);
   }
 
   @override
   void initState() {
     super.initState();
-    if(currentTap == null)  {
-    currentTap = JournalEntryFields(title: ' ',
-            body: ' ',
-            dateTime: DateTime.now(),
-            rating: 4);
-      }
+
+    if (currentTap == null) {
+      currentTap = JournalEntryFields(
+          title: 'demo', body: 'demo', dateTime: DateTime.now(), rating: 4.0);
+    }
     loadJournal();
   }
 
@@ -125,14 +125,13 @@ class _JournalScreen extends State<JournalScreen> {
                     },
                   ),
                 ]))),
-        body:
-            Container(
-              constraints: BoxConstraints(maxWidth: 400, maxHeight: 300,minWidth: 400,minHeight: 300),
-              child: LayoutBuilder(builder: (context, constraints) {
-                return constraints.maxWidth < 300 ? vertical() : horizontal();
-              }
-            )),
-            //horizontal(),
+        body: Container(
+            constraints: BoxConstraints(
+                maxWidth: 2000, maxHeight: 1000, minWidth: 800, minHeight: 100),
+            child: LayoutBuilder(builder: (context, constraints) {
+              return constraints.maxWidth < 600 ? vertical() : horizontal();
+            })),
+        //horizontal(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
