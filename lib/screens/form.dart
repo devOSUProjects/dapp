@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import '../theme.dart';
-
-class JournalEntryFields {
-  String title;
-  String body;
-  DateTime dateTime;
-  double rating;
-
-  String toString() {
-    return 'Title: $title, Body: $body, Time: $dateTime, Rating: $rating';
-  }
-}
+import '../models/journal_entry.dart';
 
 class JournalEntryForm extends StatefulWidget {
   final void Function(ThisTheme) nextTheme;
@@ -30,6 +20,7 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(title: Center(child: Text('Enter Journal Entry'))),
         endDrawer: Drawer(
@@ -104,15 +95,13 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
                                     addDateToJournalEntryValues();
                                     journalEntryFields.rating = rating;
 
-                                    print(journalEntryFields.toString());
-
-                                    await deleteDatabase('journal.db');
+                                    //await deleteDatabase('journal.db');
                                     final Database database =
                                         await openDatabase('journal.db',
                                             version: 1, onCreate: (Database db,
                                                 int version) async {
                                       await db.execute(
-                                          'CREATE TABLE IF NOT EXISTS journal_entries (id INTEGER PRIMARY KEY AUTOINCREMENT, title Text, body Text, rating INTEGER, date Text)');
+                                          'CREATE TABLE IF NOT EXISTS journal_entries (id INTEGER PRIMARY KEY AUTOINCREMENT, title Text, body Text, rating Double, date Text)');
                                     });
                                     await database.transaction((txn) async {
                                       await txn.rawInsert(

@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/welcome.dart';
 import 'theme.dart';
 import 'screens/form.dart';
+import 'screens/journal_entry_screen.dart';
 
 class App extends StatefulWidget {
   @override
@@ -32,8 +33,14 @@ class _AppState extends State<App> {
   }
 
   Widget build(BuildContext context) {
+    /*
     final routes = {
       '/': (context) => Welcome(nextTheme: nextTheme, themeObj: t),
+      'form': (context) => JournalEntryForm(nextTheme: nextTheme, themeObj: t)
+    };
+     */
+    final routes = {
+      '/': (context) => JournalScreen(nextTheme: nextTheme, themeObj: t),
       'form': (context) => JournalEntryForm(nextTheme: nextTheme, themeObj: t)
     };
 
