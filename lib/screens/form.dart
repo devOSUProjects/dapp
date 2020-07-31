@@ -123,7 +123,9 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
                                 }),
                             SizedBox(width: 10),
                             RaisedButton(
-                                onPressed: () {}, child: Text('Cancel'))
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                }, child: Text('Cancel'))
                           ])
                     ]))));
   }

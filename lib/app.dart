@@ -5,6 +5,7 @@ import 'screens/welcome.dart';
 import 'theme.dart';
 import 'screens/form.dart';
 import 'screens/journal_entry_screen.dart';
+import 'screens/journal_info.dart';
 
 class App extends StatefulWidget {
 
@@ -59,6 +60,7 @@ class _AppState extends State<App> {
   }
   Widget build(BuildContext context) {
     final routes = {
+      'jinfo': (context) => JournalInfo(nextTheme: nextTheme, themeObj: t),
       'welcome': (context) => Welcome(nextTheme: nextTheme, themeObj: t),
       'form': (context) => JournalEntryForm(nextTheme: nextTheme, themeObj: t, changeBool: changeBool),
       'entry:': (context) => JournalScreen(nextTheme: nextTheme, themeObj: t, hasEntries: hasEntries),

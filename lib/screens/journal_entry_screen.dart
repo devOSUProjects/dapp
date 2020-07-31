@@ -1,4 +1,5 @@
 import 'Dart:io';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../theme.dart';
@@ -43,8 +44,6 @@ class _JournalScreen extends State<JournalScreen> {
     }).toList();
     setState(() {
       journal = Journal(myJournal: journalEntries);
-      //widget.hasEntries(journal);
-      print(journal.myJournal);
     });
   }
 
@@ -80,7 +79,11 @@ class _JournalScreen extends State<JournalScreen> {
                 leading: FlutterLogo(),
                 trailing: Icon(Icons.more_horiz),
                 title: Text(item.title),
-                subtitle: Text(item.body),
+                subtitle: Text(DateFormat('yyyy-MM-dd - kk:mm').format(item.dateTime).toString()),
+                onTap: () {
+                  Navigator.of(context).pushNamed('jinfo', arguments: item);
+
+                }
               );
             }).toList()
 
