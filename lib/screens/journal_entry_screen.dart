@@ -6,6 +6,7 @@ import '../theme.dart';
 import '../models/journal.dart';
 import '../models/journal_entry.dart';
 import 'package:sqflite/sqflite.dart';
+import '../models/journal_entry.dart';
 
 class JournalScreen extends StatefulWidget {
   final void Function(ThisTheme) nextTheme;
@@ -20,10 +21,67 @@ class JournalScreen extends StatefulWidget {
 
 class _JournalScreen extends State<JournalScreen> {
   Journal journal;
+  JournalEntryFields currentTap;
+
+  Widget vertical() {
+    return ListView(
+        children: journal.myJournal.map((item) {
+      return ListTile(
+          leading: FlutterLogo(),
+          trailing: Icon(Icons.more_horiz),
+          title: Text(item.title),
+          subtitle: Text(DateFormat('yyyy-MM-dd - kk:mm')
+              .format(item.dateTime)
+              .toString()),
+          onTap: () {
+            Navigator.of(context).pushNamed('jinfo', arguments: item);
+          });
+    }).toList());
+  }
+
+  Widget horizontal() {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      Container(
+          constraints:
+              BoxConstraints(maxWidth: 400, maxHeight: 300, minWidth: 400),
+          child: ListView(
+              children: journal.myJournal.map((item) {
+            return ListTile(
+                leading: FlutterLogo(),
+                trailing: Icon(Icons.more_horiz),
+                title: Text(item.title),
+                subtitle: Text(DateFormat('yyyy-MM-dd - kk:mm')
+                    .format(item.dateTime)
+                    .toString()),
+                onTap: () {
+                  setState(() {
+                    currentTap = item;
+                  });
+                });
+          }).toList())),
+      Container(
+        constraints: BoxConstraints(maxWidth: 200, maxHeight: 300, minWidth: 200) ,
+          child: ListView(
+        children: <Widget>[
+          Text(
+            currentTap.title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
+          ),
+          Text(currentTap.body, style: TextStyle(fontSize: 20))
+        ],
+      ))
+    ]);
+  }
 
   @override
   void initState() {
     super.initState();
+    if(currentTap == null)  {
+    currentTap = JournalEntryFields(title: ' ',
+            body: ' ',
+            dateTime: DateTime.now(),
+            rating: 4);
+      }
     loadJournal();
   }
 
@@ -49,14 +107,9 @@ class _JournalScreen extends State<JournalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if(journal == null || journal.myJournal == null) {
-      return Scaffold(
-        body: Center(
-          child:
-            CircularProgressIndicator()
-        )
-      );
-    }else {
+    if (journal == null || journal.myJournal == null) {
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
+    } else {
       return Scaffold(
         appBar: AppBar(title: Center(child: Text('Journal Entries'))),
         endDrawer: Drawer(
@@ -72,22 +125,14 @@ class _JournalScreen extends State<JournalScreen> {
                     },
                   ),
                 ]))),
-        body: ListView(
-            children:
-            journal.myJournal.map((item) {
-              return ListTile(
-                leading: FlutterLogo(),
-                trailing: Icon(Icons.more_horiz),
-                title: Text(item.title),
-                subtitle: Text(DateFormat('yyyy-MM-dd - kk:mm').format(item.dateTime).toString()),
-                onTap: () {
-                  Navigator.of(context).pushNamed('jinfo', arguments: item);
-
-                }
-              );
-            }).toList()
-
-        ),
+        body:
+            Container(
+              constraints: BoxConstraints(maxWidth: 400, maxHeight: 300,minWidth: 400,minHeight: 300),
+              child: LayoutBuilder(builder: (context, constraints) {
+                return constraints.maxWidth < 300 ? vertical() : horizontal();
+              }
+            )),
+            //horizontal(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
@@ -98,6 +143,7 @@ class _JournalScreen extends State<JournalScreen> {
     }
   }
 }
+
 void pushForm(BuildContext context) {
   Navigator.of(context).pushNamed('form');
 }

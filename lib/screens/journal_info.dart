@@ -13,7 +13,7 @@ class JournalInfo extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Center(child: Text('Welcome'))
+          title: Center(child: Text('Entry details'))
       ),
       endDrawer: Drawer(
           child: Container(
