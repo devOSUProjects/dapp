@@ -3,6 +3,13 @@ class Journal {
   List <JournalEntryFields> myJournal = List<JournalEntryFields>();
 
   Journal({this.myJournal});
+  bool isEmpty() {
+    if(myJournal.length == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   void addEntry(JournalEntryFields je) {
     this.myJournal.add(je);

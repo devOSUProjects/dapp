@@ -9,8 +9,9 @@ import 'package:sqflite/sqflite.dart';
 class JournalScreen extends StatefulWidget {
   final void Function(ThisTheme) nextTheme;
   final ThisTheme themeObj;
+  void Function(Journal) hasEntries;
 
-  JournalScreen({this.nextTheme, this.themeObj});
+  JournalScreen({this.nextTheme, this.themeObj, this.hasEntries});
 
   @override
   _JournalScreen createState() => _JournalScreen();
@@ -42,15 +43,20 @@ class _JournalScreen extends State<JournalScreen> {
     }).toList();
     setState(() {
       journal = Journal(myJournal: journalEntries);
+      //widget.hasEntries(journal);
+      print(journal.myJournal);
     });
-    //sleep(Duration(seconds:10));
-
   }
 
   @override
   Widget build(BuildContext context) {
     if(journal == null || journal.myJournal == null) {
-      return Text("hehe");
+      return Scaffold(
+        body: Center(
+          child:
+            CircularProgressIndicator()
+        )
+      );
     }else {
       return Scaffold(
         appBar: AppBar(title: Center(child: Text('Journal Entries'))),
@@ -89,7 +95,6 @@ class _JournalScreen extends State<JournalScreen> {
     }
   }
 }
-
 void pushForm(BuildContext context) {
   Navigator.of(context).pushNamed('form');
 }

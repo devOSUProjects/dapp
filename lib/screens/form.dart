@@ -1,3 +1,4 @@
+import 'package:call_me_maybe/screens/journal_entry_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import '../theme.dart';
@@ -6,8 +7,9 @@ import '../models/journal_entry.dart';
 class JournalEntryForm extends StatefulWidget {
   final void Function(ThisTheme) nextTheme;
   final ThisTheme themeObj;
+  void Function() changeBool;
 
-  JournalEntryForm({this.nextTheme, this.themeObj});
+  JournalEntryForm({this.nextTheme, this.themeObj, this.changeBool});
 
   @override
   _JournalEntryFormState createState() => _JournalEntryFormState();
@@ -115,7 +117,8 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
                                           ]);
                                     });
                                     await database.close();
-                                    Navigator.of(context).pop();
+                                    widget.changeBool();
+                                    Navigator.of(context).pushNamed('app');
                                   }
                                 }),
                             SizedBox(width: 10),
