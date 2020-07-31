@@ -29,7 +29,7 @@ class _AppState extends State<App> {
   void initBool() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      empty = prefs.getBool('isEmpty') ?? false;
+      empty = prefs.getBool('isEmpty') ?? true;
     });
 
   }

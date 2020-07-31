@@ -21,7 +21,9 @@ class JournalScreen extends StatefulWidget {
 
 class _JournalScreen extends State<JournalScreen> {
   Journal journal;
-  JournalEntryFields currentTap;
+  JournalEntryFields currentTap = JournalEntryFields(
+  title: ' ', body: ' ', dateTime: DateTime.now(), rating: 4.0);
+  //JournalEntryFields currentTap;
 
   Widget vertical() {
     return ListView(
@@ -77,11 +79,13 @@ class _JournalScreen extends State<JournalScreen> {
   @override
   void initState() {
     super.initState();
-
+/*
     if (currentTap == null) {
       currentTap = JournalEntryFields(
           title: 'demo', body: 'demo', dateTime: DateTime.now(), rating: 4.0);
     }
+    */
+
     loadJournal();
   }
 
