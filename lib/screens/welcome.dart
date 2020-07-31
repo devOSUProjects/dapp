@@ -10,12 +10,7 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      title: 'main',
-      theme: Theme.of(context),
-      home:
-
-      Scaffold(
+      return Scaffold(
         appBar: AppBar(
             title: Center(child: Text('Welcome'))
         ),
@@ -56,8 +51,7 @@ class Welcome extends StatelessWidget {
             pushForm(context);
           },
         ),
-      )
-    );
+      );
   }
 }
 

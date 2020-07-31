@@ -34,7 +34,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     final routes = {
       '/': (context) => Welcome(nextTheme: nextTheme, themeObj: t),
-      'form': (context) => JournalEntryForm()
+      'form': (context) => JournalEntryForm(nextTheme: nextTheme, themeObj: t)
     };
 
     return MaterialApp(
